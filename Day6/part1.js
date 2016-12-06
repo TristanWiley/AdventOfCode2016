@@ -12,23 +12,19 @@ for (var c = 0; c < rows.length; c++) {
 	answer += mode(rows[c]);
 }
 console.log(answer);
-function mode(array){
-    if(array.length == 0)
-        return null;
-    var modeMap = {};
-    var maxEl = array[0], maxCount = 1;
-    for(var i = 0; i < array.length; i++)
-    {
-        var el = array[i];
-        if(modeMap[el] == null)
-            modeMap[el] = 1;
-        else
-            modeMap[el]++;  
-        if(modeMap[el] > maxCount)
-        {
-            maxEl = el;
-            maxCount = modeMap[el];
+
+function mode(array) {
+    var count = {};
+    array.forEach(function (a) {
+        count[a] = (count[a] || 0) + 1;
+    });
+    return Object.keys(count).reduce(function (r, k, i) {
+        if (!i || count[k] > count[r[0]]) {
+            return [k];
         }
-    }
-    return maxEl;
+        if (count[k] === count[r[0]]) {
+            r.push(k);
+        }
+        return r;
+    }, []);
 }
